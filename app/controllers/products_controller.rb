@@ -58,17 +58,17 @@ class ProductsController < ApplicationController
   end
 
   def add_to_cart
-    # binding.pry
-    # @product = Product.find(params[:id])
-    # CartItem.create(cart_id: params[:cart_id], product_id: params[:product_id])
+    # if current_user.cart.products.ids.include? params[:product_id].to_i
+    #   cart_item = CartItem.find(params[:cart_id])
+    #   cart_item.quantity += 1
+    #   cart_item.save
+    # else
+    #   CartItem.create(cart_id: params[:cart_id], product_id: params[:product_id])
+    # end
+    cart_item = CartItem.find_or_create_by(product_id: params[:product_id], cart_id: params[:cart_id])
+    cart_item.quantity += 1
+    cart_item.save
 
-    if current_user.cart.products.ids.include? params[:product_id].to_i
-      cart_item = CartItem.find(params[:cart_id])
-      cart_item.quantity += 1
-      cart_item.save
-    else
-      CartItem.create(cart_id: params[:cart_id], product_id: params[:product_id])
-    end
     redirect_to products_path
   end
 

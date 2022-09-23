@@ -1,0 +1,37 @@
+<h5> <%= link_to "View all Products", products_path %> </h5>
+<h5> <%= link_to "Clear your Cart", bulk_delete_cart_items_path if @cart_items.present?%> </h5>
+
+<h1> Carts page </h1>
+
+<table>
+  <thead>
+  <tr>
+  <th>Name</th>
+  <th>Description</th>
+  <th>Price</th>
+  <th>Quantity</th>
+  <th colspan="4"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+    <% @cart_items.each do |item| %>
+      <tr>
+        <td><%= item.product.name %></td>
+        <td><%= item.product.description %></td>
+        <td><%= item.product.price %></td>
+        <td><%= item.quantity %></td>
+        <td><%= button_to '+', add_to_cart_path, params: {product_id: item.product.id, cart_id: current_user.cart.id, from_cart_page: :true }, method: :get %></td>
+        <% if current_user.cart.cart_items.find_by_product_id(item.product).quantity > 0 %>
+          <td><%= button_to '-', deduct_from_cart_path, params: {product_id: item.product.id, cart_id: current_user.cart.id, from_cart_page: :true }, method: :get %></td>
+        <% else %>
+          <td>
+        <% end %>
+        <td><%= link_to 'Show', product_path(item.product) %></td>
+        <td><%= link_to 'Remove from Cart', remove_from_cart_path(id: item), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>

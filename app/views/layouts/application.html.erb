@@ -13,8 +13,15 @@
 
   <body>
     <%= render partial: 'shared/navbar' %>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+
+    <div class="notice">
+      <% if notice %>
+        <div id="notice" class="alert alert-success"><%= notice %></div>
+      <% elsif alert %>
+        <div id="alert" class="alert alert-danger"><%= alert %></div>
+      <% end %>
+    </div>
+
     <div class='container'>
       <%= yield %>
     </div>

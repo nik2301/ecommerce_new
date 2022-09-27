@@ -14,7 +14,7 @@ class CartsController < ApplicationController
     cart_item = CartItem.find_or_create_by(product_id: params[:product_id], cart_id: params[:cart_id])
     cart_item.quantity += 1
     cart_item.save
-    flash[:notice] = "Added successfully"
+    # flash[:notice] = "Added successfully"
 
     params[:from_cart_page] == "true" ? (redirect_to cart_path) : (redirect_to products_path)
   end
@@ -23,7 +23,7 @@ class CartsController < ApplicationController
     cart_item = CartItem.find_by(product_id: params[:product_id], cart_id: params[:cart_id])
     cart_item.quantity -= 1
     cart_item.save
-    flash[:notice] = "Deleted successfully"
+    # flash[:notice] = "Deleted successfully"
 
     params[:from_cart_page] == "true" ? (redirect_to cart_path) : (redirect_to products_path)
   end

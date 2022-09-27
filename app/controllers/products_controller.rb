@@ -4,6 +4,10 @@ class ProductsController < ApplicationController
   # GET /products or /products.json
   def index
     @products = Product.all
+    respond_to do |format|
+      format.json { render :index, location: @product }
+      format.html
+    end
   end
 
   # GET /products/1 or /products/1.json

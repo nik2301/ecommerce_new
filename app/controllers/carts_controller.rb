@@ -1,6 +1,6 @@
 class CartsController < ApplicationController
   def index
-    @cart_items = current_user.cart.cart_items.includes(:product)
+    @cart_items = current_user.cart.cart_items.eager_load(:product)
   end
 
   def add_to_cart

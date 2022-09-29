@@ -10,9 +10,9 @@ class AddressesController < ApplicationController
 
   def update
     if current_user.address.update(address_params)
-      redirect_to cart_path
+      redirect_to checkout_path(cart_id: current_user.cart.id), notice: "Address changed.."
     else
-      render 'checkout'
+      redirect_to checkout_path(cart_id: current_user.cart.id), alert: "Address can't be blank"
     end
   end
 

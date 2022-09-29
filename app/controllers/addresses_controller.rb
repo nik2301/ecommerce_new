@@ -1,9 +1,4 @@
 class AddressesController < ApplicationController
-  def checkout
-
-    @address = current_user.address ? current_user.address : current_user.address.new
-  end
-
   def create
     @address = current_user.address.new(address_params)
     if @address.save

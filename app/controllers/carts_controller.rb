@@ -1,4 +1,7 @@
 class CartsController < ApplicationController
+  before_action :authenticate_user!
+  require "razorpay"
+
   def index
     @cart_items = current_user.cart.cart_items.eager_load(:product)
   end
@@ -39,5 +42,24 @@ class CartsController < ApplicationController
     binding.pry
     current_user.cart.cart_items.destroy_all
     redirect_to cart_path
+  end
+
+  def checkout
+    @address = current_user.address ? current_user.address : current_user.address.new
+    @cart_items = Cart.find(params[:cart_id]).cart_items.includes(:product)
+  end
+
+  def init_payment
+    @order = RazorpayPayment.create_order(params[:total])
+  end
+
+  def verify_payment
+    confirm = RazorpayPayment.verify_payment(params)
+
+    if confirm
+      redirect_to root_path, notice: "Hooray, your order has been successfully placed.!"
+    else
+      redirect_to root_path, alert: "Oops.. Something went wrong!"
+    end
   end
 end

@@ -1,0 +1,65 @@
+<h1> Checkout Form</h1>
+
+<% cart_items = filter_cart_items(@cart_items) %>
+<% final_amount = total_amount(cart_items) * 100 %>
+
+<%= form_with(model: @address, local: true) do |form| %>
+  <% if @address.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@address.errors.count, "error") %> prohibited this address from being saved:</h2>
+
+      <ul>
+      <% @address.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :address %>
+    <%= form.text_field :content %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+
+<!-- <hr>
+<%= link_to "Checkout", init_payment_path(total: final_amount), data: { turbolinks: false } %>
+<hr>
+-->
+
+<%= form_tag(init_payment_path, method: "get") do %>
+  <%= hidden_field_tag 'total', final_amount %>
+  <%= submit_tag("Checkout") %>
+<% end %>
+
+<table>
+<thead>
+<tr>
+  <th>Name</th>
+  <th>Description</th>
+  <th>Quantity</th>
+  <th>Price</th>
+  <th colspan="4"></th>
+</tr>
+</thead>
+
+  <tbody>
+    <% cart_items.each do |item| %>
+      <tr>
+        <td><%= item.product.name %></td>
+        <td><%= item.product.description %></td>
+        <td><%= item.quantity %></td>
+        <td><%= item.product.price %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h3>
+  Total Amount: <%= number_to_currency((final_amount / 100), unit: 'Rs ') %>
+</h3>
+

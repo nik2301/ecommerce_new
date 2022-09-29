@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :addresses
   resources :products
   devise_for :users, :controllers => { :registrations => 'users/registrations' }
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
@@ -8,4 +9,7 @@ Rails.application.routes.draw do
   get 'deduct_from_cart' => 'carts#deduct_from_cart'
   delete 'remove_from_cart' => 'carts#remove_from_cart'
   get 'bulk_delete_cart_items' => 'carts#bulk_delete_cart_items'
+  get 'checkout' => 'carts#checkout'
+  get 'init_payment' => 'carts#init_payment'
+  post 'verify_payment' => 'carts#verify_payment'
 end

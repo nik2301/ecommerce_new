@@ -6,11 +6,11 @@
 <table>
   <thead>
   <tr>
-  <th>Name</th>
-  <th>Description</th>
-  <th>Price</th>
-  <th>Quantity</th>
-  <th colspan="4"></th>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Price</th>
+    <th>Quantity</th>
+    <th colspan="4"></th>
   </tr>
   </thead>
 
@@ -33,5 +33,7 @@
     <% end %>
   </tbody>
 </table>
+<hr>
 
+<%= button_to "Proceed", checkout_path, params:{cart_id: @cart_items.first.cart.id}, method: :get %>
 <br>

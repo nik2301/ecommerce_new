@@ -21,7 +21,7 @@
         <td><%= item.product.description %></td>
         <td><%= item.product.price %></td>
         <td><%= item.quantity %></td>
-        <% if item.quantity > 1 %>
+        <% if item.quantity > 0 %>
           <td><%= button_to '-', deduct_from_cart_path, params: {product_id: item.product.id, cart_id: current_user.cart.id, from_cart_page: :true }, method: :get %></td>
         <% else %>
           <td> &emsp;&emsp;</td>

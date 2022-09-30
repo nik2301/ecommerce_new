@@ -29,6 +29,8 @@
       </ul>
       <div class='go-to-cart-button' style='margin-right:20px'>
         <%= link_to 'Cart', cart_path %>
+        <% cart_count = filter_cart_items(current_user.cart_items).count %>
+        <%= cart_count.zero? ? "" : cart_count %>
       </div>
       <div class='personal-details'>
         Hello, <%= current_user&.email %>

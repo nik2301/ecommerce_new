@@ -29,9 +29,9 @@
 
         <% cart_item = find_cart_item(product) %>
         <% if cart_item.present? && cart_item.quantity > 0 %>
-          <td><%= button_to '+', add_to_cart_path, params: {product_id: product.id, cart_id: cart_id }, method: :get %>
-          <td><%= cart_item.quantity %>
           <td><%= button_to '-', deduct_from_cart_path, params: {product_id: product.id, cart_id: cart_id }, method: :get %>
+          <td><%= cart_item.quantity %>
+          <td><%= button_to '+', add_to_cart_path, params: {product_id: product.id, cart_id: cart_id }, method: :get %>
         <% else %>
           <td><%= button_to 'Add To Cart', add_to_cart_path, params: {product_id: product.id, cart_id: cart_id }, method: :get %>
         <% end %>

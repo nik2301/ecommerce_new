@@ -1,0 +1,17 @@
+<ol>
+  <% @orders.each do |order| %>
+    <li>
+      Order placed on: <%= order.created_at.in_time_zone("Kolkata").strftime('%d-%m-%Y %A %R %P %Z') %> &emsp;&emsp;
+      Ship to: <%= current_user.email %> &emsp;&emsp;
+      On address: <%= current_user.address.content %> &emsp;&emsp;
+      order id: <%= order.razorpay_order_id %> &emsp;&emsp;
+      Status: <%= order.status.capitalize %> <br><br>
+
+      <% order.products.each do |product| %>
+        Product Name: <%= product.name %> &emsp;&emsp;
+        Product Description: <%= product.description %> &emsp;&emsp;
+        Product Price: Rs. <%= product.price %> <br><br>
+      <% end %>
+    </li>
+  <% end %>
+</ol>

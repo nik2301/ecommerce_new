@@ -1,6 +1,6 @@
 <h1>Products</h1>
 
-<% cart_id = current_cart %>
+<% cart_id = current_cart if user_signed_in?%>
 
 <table>
   <thead>
@@ -27,7 +27,7 @@
         <td><%= link_to 'Edit', edit_product_path(product) %></td>
         <td><%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
 
-        <% cart_item = find_cart_item(product) %>
+        <% cart_item = find_cart_item(product) if user_signed_in? %>
         <% if cart_item.present? && cart_item.quantity > 0 %>
           <td><%= button_to '-', deduct_from_cart_path, params: {product_id: product.id, cart_id: cart_id }, method: :get %>
           <td><%= cart_item.quantity %>

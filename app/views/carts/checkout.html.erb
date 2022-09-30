@@ -30,36 +30,39 @@
 <%= link_to "Checkout", init_payment_path(total: final_amount), data: { turbolinks: false } %>
 <hr>
 -->
+<% unless cart_items.empty? %>
+  <%= form_tag(init_payment_path, method: "get") do %>
+    <%= hidden_field_tag 'total', final_amount %>
+    <%= hidden_field_tag 'ids', cart_items.map(&:id) %>
+    <%= submit_tag("Checkout") %>
+  <% end %>
 
-<%= form_tag(init_payment_path, method: "get") do %>
-  <%= hidden_field_tag 'total', final_amount %>
-  <%= submit_tag("Checkout") %>
+  <table>
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Quantity</th>
+    <th>Price</th>
+    <th colspan="4"></th>
+  </tr>
+  </thead>
+
+    <tbody>
+      <% cart_items.each do |item| %>
+        <tr>
+          <td><%= item.product.name %></td>
+          <td><%= item.product.description %></td>
+          <td><%= item.quantity %></td>
+          <td><%= item.product.price %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <h3>
+    Total Amount: <%= number_to_currency((final_amount / 100), unit: 'Rs ') %>
+  </h3>
+<% else %>
+<h2> Your Cart is Empty.. </h2>
 <% end %>
-
-<table>
-<thead>
-<tr>
-  <th>Name</th>
-  <th>Description</th>
-  <th>Quantity</th>
-  <th>Price</th>
-  <th colspan="4"></th>
-</tr>
-</thead>
-
-  <tbody>
-    <% cart_items.each do |item| %>
-      <tr>
-        <td><%= item.product.name %></td>
-        <td><%= item.product.description %></td>
-        <td><%= item.quantity %></td>
-        <td><%= item.product.price %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<h3>
-  Total Amount: <%= number_to_currency((final_amount / 100), unit: 'Rs ') %>
-</h3>
-

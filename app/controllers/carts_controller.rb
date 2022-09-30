@@ -39,7 +39,6 @@ class CartsController < ApplicationController
   end
 
   def bulk_delete_cart_items
-    binding.pry
     current_user.cart.cart_items.destroy_all
     redirect_to cart_path
   end
@@ -51,15 +50,33 @@ class CartsController < ApplicationController
 
   def init_payment
     @order = RazorpayPayment.create_order(params[:total])
+    @cart_items = CartItem.find(params[:ids].split)
   end
 
   def verify_payment
     confirm = RazorpayPayment.verify_payment(params)
+    @cart_items = CartItem.find(params[:cart_items].split)
 
     if confirm
+      create_order
+      clear_cart
       redirect_to root_path, notice: "Hooray, your order has been successfully placed.!"
     else
       redirect_to root_path, alert: "Oops.. Something went wrong!"
     end
+  end
+
+  private
+
+  def create_order
+    order = current_user.orders.create(razorpay_payment_id: params[:razorpay_payment_id], razorpay_order_id: params[:razorpay_order_id])
+
+    @cart_items.each do |item|
+      order.order_items.create(product_id: item.product_id, quantity: item.quantity)
+    end
+  end
+
+  def clear_cart
+    CartItem.delete(params[:cart_items].split)
   end
 end

@@ -3,6 +3,7 @@
   <%= hidden_field_tag 'razorpay_payment_id', '' %>
   <%= hidden_field_tag 'razorpay_order_id', '' %>
   <%= hidden_field_tag 'razorpay_signature', '' %>
+  <%= hidden_field_tag 'cart_items', params[:ids] %>
 <% end %>
 
 <button id="rzp-button1">Pay</button>

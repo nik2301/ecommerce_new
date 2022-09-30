@@ -7,6 +7,8 @@ gem 'pry'
 gem 'pry-nav'
 gem 'razorpay'
 gem 'jquery-rails'
+gem 'activeadmin'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.8', '>= 5.2.8.1'
 # Use sqlite3 as the database for Active Record

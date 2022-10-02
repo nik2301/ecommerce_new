@@ -1,4 +1,12 @@
 <p>
+  <% if @product.images.attached? %>
+    <% @product.images.each do |image| %>
+      <%= image_tag image.variant(resize: "300x300")%>
+    <% end %>
+  <% end %>
+</p>
+
+<p>
   <strong>Name:</strong>
   <%= @product.name %>
 </p>

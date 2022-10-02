@@ -37,7 +37,7 @@
         <% else %>
           <td><%= button_to 'Add To Cart', add_to_cart_path, params: {product_id: product.id, cart_id: cart_id }, method: :get %>
         <% end %>
-
+        <hr>
       </tr>
     <% end %>
   </tbody>

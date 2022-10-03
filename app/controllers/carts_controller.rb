@@ -1,5 +1,6 @@
 class CartsController < ApplicationController
   before_action :authenticate_user!
+  include OrderTotal
   require "razorpay"
 
   def index
@@ -69,7 +70,7 @@ class CartsController < ApplicationController
   private
 
   def create_order
-    order = current_user.orders.create(razorpay_payment_id: params[:razorpay_payment_id], razorpay_order_id: params[:razorpay_order_id])
+    order = current_user.orders.create(razorpay_payment_id: params[:razorpay_payment_id], razorpay_order_id: params[:razorpay_order_id], total: total_amount(@cart_items))
 
     @cart_items.each do |item|
       order.order_items.create(product_id: item.product_id, quantity: item.quantity)

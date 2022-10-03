@@ -71,6 +71,8 @@ class CartsController < ApplicationController
   def create_order
     order = current_user.orders.create(razorpay_payment_id: params[:razorpay_payment_id], razorpay_order_id: params[:razorpay_order_id])
 
+    send_email_to_admin(order)
+
     @cart_items.each do |item|
       order.order_items.create(product_id: item.product_id, quantity: item.quantity)
     end
@@ -78,5 +80,9 @@ class CartsController < ApplicationController
 
   def clear_cart
     CartItem.delete(params[:cart_items].split)
+  end
+
+  def send_email_to_admin(order)
+    OrderMailer.with(order: order, user: current_user).new_order_email.deliver_later
   end
 end

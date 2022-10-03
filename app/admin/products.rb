@@ -34,4 +34,19 @@ ActiveAdmin.register Product do
     f.input :images, as: :file, input_html: { multiple: true }
     actions
   end
+
+  show do
+    attributes_table do
+      row :name
+      row :description
+      row :price
+      if product.images.attached?
+        row :image do
+          product.images.map do |img|
+            image_tag(img.variant(resize: "100x100"))
+          end
+        end
+      end
+    end
+  end
 end

@@ -26,6 +26,14 @@
     <%= form.text_field :price %>
   </div>
 
+  <p>
+    <% if @product.images.attached? %>
+      <% @product.images.each do |image| %>
+        <%= image_tag image.variant(resize: "100x100")%> &emsp;&emsp;
+      <% end %>
+    <% end %>
+  </p> <br>
+
   <div class="field">
     <%= form.label 'add image(s)'%>
     <%= form.file_field :images, multiple: true %>

@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p>Congratulations, Your order has been confirmed.!</p>
+    <p>
+    Order details<br>
+    --------------------------
+    </p>
+    <p>Order Placed On: <%= @order.created_at.in_time_zone("Kolkata").strftime('%d-%m-%Y %A %R %P %Z') %></p>
+    <p>Email: <%= @user.email %></p>
+    <p>Ship To: <%= @user.address.content %></p>
+    <p>Order ID: <%= @order.razorpay_order_id %></p>
+    <p>
+    <hr>
+    Product details<br>
+    --------------------------
+    <p>
+      <ol>
+        <% @order.products.each do |product| %>
+          <li>
+            Product Name: <%= product.name %> <br>
+            Product Description: <%= product.description %> <br>
+            Product Price: Rs. <%= product.price %> <br><br>
+          </li>
+        <% end %>
+      </ol>
+      Grand Total: Rs <%= total_amount(@order.order_items) %>
+    </p>
+    Message:<br>
+    ----------
+    </p>
+    <p> Have a good day :) </p>
+  </body>
+</html>

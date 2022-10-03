@@ -1,0 +1,22 @@
+Congratulations, Your order has been confirmed.!
+===============================================
+
+Order details
+--------------------------
+    Placed On: <%= @order.created_at.in_time_zone("Kolkata").strftime('%d-%m-%Y %A %R %P %Z') %>
+    Email: <%= @user.email %>
+    Ship To: <%= @user.address.content %>
+    Order ID: <%= @order.razorpay_order_id %>
+
+Product details
+--------------------------
+    <% @order.products.each do |product| %>
+      Product Name: <%= product.name %>
+      Product Description: <%= product.description %>
+      Product Price: Rs. <%= product.price %>
+
+    <% end %>
+    Grand Total: Rs <%= total_amount(@order.order_items) %>
+
+Message:
+Have a good day :)

@@ -71,11 +71,12 @@ class CartsController < ApplicationController
   def create_order
     order = current_user.orders.create(razorpay_payment_id: params[:razorpay_payment_id], razorpay_order_id: params[:razorpay_order_id])
 
-    send_email_to_admin(order)
-
     @cart_items.each do |item|
       order.order_items.create(product_id: item.product_id, quantity: item.quantity)
     end
+
+    send_email_to_admin(order)
+    send_order_confirmation_to_user(order)
   end
 
   def clear_cart
@@ -84,5 +85,9 @@ class CartsController < ApplicationController
 
   def send_email_to_admin(order)
     OrderMailer.with(order: order, user: current_user).new_order_email.deliver_later
+  end
+
+  def send_order_confirmation_to_user(order)
+    OrderMailer.with(order: order, user: current_user).order_created_mail.deliver_later
   end
 end

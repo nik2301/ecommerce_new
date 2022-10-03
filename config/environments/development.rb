@@ -37,6 +37,14 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
+  # Note - Don't add gem in Gemfile, it will create conflicts
+  # Instead run 'gem install mailcatcher' in console
+  # Then run 'mailcatcher' which will start smtp daemon on 127.0.0.1:1025
+  # Then hit 127.0.0.1:1080 in browser
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = { :address => '127.0.0.1', :port => 1025 }
+  config.action_mailer.raise_delivery_errors = false
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 

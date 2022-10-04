@@ -25,7 +25,7 @@ ActiveAdmin.register User do
     id_column
     column :email
     column "address" do |user|
-      user.address.content if user.address.present?
+      link_to user.address.content, admin_address_path(user.address) if user.address.present?
     end
     column :created_at
     column :updated_at

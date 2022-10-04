@@ -14,6 +14,11 @@ ActiveAdmin.register Order do
   #   permitted << :other if params[:action] == 'create' && current_user.admin?
   #   permitted
   # end
+  scope :all
+  scope :pending
+  scope :completed
+  scope :cancelled
+
   filter :products
   filter :status, as: :select
   filter :razorpay_payment_id

@@ -10,7 +10,7 @@
     </p>
     <p>Order Placed On: <%= @order.created_at.in_time_zone("Kolkata").strftime('%d-%m-%Y %A %R %P %Z') %></p>
     <p>Email: <%= @user.email %></p>
-    <p>Ship To: <%= @user.address.content %></p>
+    <p>Ship To: <%= @order.address %></p>
     <p>Order ID: <%= @order.razorpay_order_id %></p>
     <p>
     <hr>

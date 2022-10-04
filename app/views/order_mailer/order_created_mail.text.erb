@@ -5,7 +5,7 @@ Order details
 --------------------------
     Placed On: <%= @order.created_at.in_time_zone("Kolkata").strftime('%d-%m-%Y %A %R %P %Z') %>
     Email: <%= @user.email %>
-    Ship To: <%= @user.address.content %>
+    Ship To: <%= @order.address %>
     Order ID: <%= @order.razorpay_order_id %>
 
 Product details

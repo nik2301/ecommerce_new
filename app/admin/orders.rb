@@ -21,4 +21,34 @@ ActiveAdmin.register Order do
   filter :user_email, as: :select, collection: User.all.pluck(:email)
   filter :created_at
   filter :updated_at
+
+  action_item :pending, only: :show do
+    link_to "Pending", pending_status_admin_order_path(order), method: :put
+  end
+
+  action_item :complete, only: :show  do
+    link_to "Complete", complete_status_admin_order_path(order), method: :put
+  end
+
+  action_item :cancel, only: :show do
+    link_to "Cancel", cancel_status_admin_order_path(order), method: :put
+  end
+
+  member_action :pending_status, method: :put do
+    @order = Order.find(params[:id])
+    @order.pending!
+    redirect_to admin_order_path(@order)
+  end
+
+  member_action :complete_status, method: :put do
+    @order = Order.find(params[:id])
+    @order.completed!
+    redirect_to admin_order_path(@order)
+  end
+
+  member_action :cancel_status, method: :put do
+    @order = Order.find(params[:id])
+    @order.cancelled!
+    redirect_to admin_order_path(@order)
+  end
 end

@@ -263,7 +263,7 @@ Devise.setup do |config|
   # should add them to the navigational formats lists.
   #
   # The "*/*" below is required to match Internet Explorer requests.
-  # config.navigational_formats = ['*/*', :html]
+  # config.navigational_formats = []
 
   # The default HTTP method used to sign out a resource. Default is :delete.
   config.sign_out_via = :delete
@@ -271,8 +271,9 @@ Devise.setup do |config|
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
-  # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
-
+  config.omniauth :github, 'e94f6f65118fce21ea96', '8fe24c86cd892264d396159efdbdab2d1523827f'
+  config.omniauth :google_oauth2, '249445423999-1agnps7eiqim3bj25psc3jf9edkbuq4t.apps.googleusercontent.com', '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'
+  # 249445423999-1agnps7eiqim3bj25psc3jf9edkbuq4t.apps.googleusercontent.com
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.
@@ -308,4 +309,15 @@ Devise.setup do |config|
   # When set to false, does not sign a user in automatically after their password is
   # changed. Defaults to true, so a user is signed in automatically after changing a password.
   # config.sign_in_after_change_password = true
+  # config.jwt do |jwt|
+  #   jwt.secret = Rails.application.credentials.fetch(:secret_key_base)
+
+  #   jwt.dispatch_requests = [
+  #     ['POST', %r{^/users/sign_in$}]
+  #   ]
+  #   jwt.revocation_requests = [
+  #     ['DELETE', %r{^/users/sign_out$}]
+  #   ]
+  #   jwt.expiration_time = 120.minutes.to_i
+  # end
 end

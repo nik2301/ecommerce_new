@@ -4,6 +4,6 @@ module ProductsHelper
   end
 
   def current_cart
-    current_user.cart.id
+    current_user&.cart&.id
   end
 end

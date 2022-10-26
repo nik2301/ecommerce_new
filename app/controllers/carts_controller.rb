@@ -45,7 +45,7 @@ class CartsController < ApplicationController
   end
 
   def checkout
-    @address = current_user.address ? current_user.address : current_user.address.new
+    @address = current_user.address ? current_user.address : current_user.build_address
     @cart_items = Cart.find(params[:cart_id]).cart_items.includes(:product)
   end
 

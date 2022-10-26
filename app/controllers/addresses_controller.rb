@@ -1,10 +1,10 @@
 class AddressesController < ApplicationController
   def create
-    @address = current_user.address.new(address_params)
+    @address = current_user.build_address(address_params)
     if @address.save
-      redirect_to cart_path
+      redirect_to checkout_path(cart_id: current_user.cart.id), notice: "Address changed.."
     else
-      render 'checkout'
+      redirect_to checkout_path(cart_id: current_user.cart.id), alert: "Address can't be blank"
     end
   end
 

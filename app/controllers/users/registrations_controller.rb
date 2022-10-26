@@ -3,7 +3,7 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create]
   before_action :configure_account_update_params, only: [:update]
-  after_action :create_user_cart, only: [:create]
+  # after_action :create_user_cart, only: [:create]
 
   # GET /resource/sign_up
   def new
@@ -61,7 +61,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
     super(resource)
   end
 
-  def create_user_cart
-    @user.cart = Cart.new(user_id: @user.id) if @user.valid?
-  end
+  # def create_user_cart
+  #   binding.pry
+  #   @user.cart = Cart.new(user_id: @user.id) if @user.valid?
+  # end
 end

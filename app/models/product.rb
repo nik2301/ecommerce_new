@@ -4,4 +4,9 @@ class Product < ApplicationRecord
   scope :with_long_name, -> { where("LENGTH(name) > 5") }
   has_many_attached :images, dependent: :destroy
   validates_presence_of :name, :description, :price
+  after_create :send_create_sms_to_admin
+
+  def send_create_sms_to_admin
+    TwilioOrderSms.new.send_product_create_info(self)
+  end
 end

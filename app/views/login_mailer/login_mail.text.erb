@@ -1,12 +1,13 @@
-Logged in successfull Using <%= @kind %>!
-
+Logged in successfully Using <%= @kind %>!
+<% if @password.present? %>
 Your current password is
-    <%= @password %>
+	<%= @password %>
 --------------------------
+It is a default password. Passwords are never saved
+Kindly change your password..
+<% end %>
 ===============================================
 
 Message
 ----------
-It is a default password. Passwords are never saved
-Kindly change your password..
 Have a good day :)

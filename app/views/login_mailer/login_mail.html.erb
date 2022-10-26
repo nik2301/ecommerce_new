@@ -3,18 +3,20 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <p>Logged in successfull Using <%= @kind %>!</p>
-    <p>
-    Your current password is<br>
-    --------------------------
-    </p>
-    <p> <%= @password %></p>
+    <p>Logged in successfully Using <%= @kind %>!</p>
+    <% if @password.present? %>
+      <p>
+        Your current password is<br>
+      </p>
+      <p> <%= @password %></p>
+        --------------------------
+      <p> It is a default password. Passwords are never saved <br>
+      Kindly change your password.. <br>
+    <% end %>
     <p>
     Message:<br>
     ----------
     </p>
-    <p> It is a default password. Passwords are never saved <br>
-    Kindly change your password.. <br>
     Have a good day :) </p>
   </body>
 </html>

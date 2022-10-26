@@ -4,7 +4,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :omniauthable,
-         omniauth_providers: [:github, :google_oauth2]
+         omniauth_providers: [:github, :google_oauth2, :facebook]
 
         #  :jwt_authenticatable, jwt_revocation_strategy: self
   has_one :cart, dependent: :destroy
@@ -23,17 +23,16 @@ class User < ApplicationRecord
     self.create_cart if self.persisted?
   end
 
-  def self.from_omniauth(access_token, google = false, github = false)
+  def self.from_omniauth(access_token, kind)
     data = access_token.info
     user = User.where(email: data['email']).first
-    # Uncomment the section below if you want users to be created if they don't exist
     unless user
-      kind = google ? 'Google' : 'Github'
       user = User.create(
           email: data['email'],
           password: Devise.friendly_token[0,20]
       )
     end
+    LoginMailer.with(email: user.email, password: user.password || "", kind: kind).login_mail.deliver_later if user.persisted?
     user
   end
 end

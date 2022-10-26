@@ -15,6 +15,7 @@ gem 'omniauth-github', github: 'omniauth/omniauth-github', branch: 'master'
 gem "omniauth-rails_csrf_protection"
 gem 'omniauth-google-oauth2'
 gem 'omniauth-facebook'
+gem 'twilio-ruby'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.8', '>= 5.2.8.1'

@@ -81,6 +81,7 @@ class CartsController < ApplicationController
 
     send_email_to_admin(order)
     send_order_confirmation_to_user(order)
+    send_sms_to_admin(order)
   end
 
   def clear_cart
@@ -93,5 +94,9 @@ class CartsController < ApplicationController
 
   def send_order_confirmation_to_user(order)
     OrderMailer.with(order: order, user: current_user).order_created_mail.deliver_later
+  end
+
+  def send_sms_to_admin(order)
+    TwilioOrderSms.send_sms(order)
   end
 end

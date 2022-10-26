@@ -97,6 +97,6 @@ class CartsController < ApplicationController
   end
 
   def send_sms_to_admin(order)
-    TwilioOrderSms.send_sms(order)
+    TwilioOrderSms.new.send_sms(order)
   end
 end

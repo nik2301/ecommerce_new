@@ -15,5 +15,11 @@ class TwilioOrderSms
       to: to,
       body: "Hello Admin..! A new Order No. #{order.id} has been placed successfully."
     )
+    # Uncomment to activate voice calls
+    # client.calls.create(
+    #   from: from,
+    #   to: to,
+    #   twiml: '<Response> <Say voice="alice">Hello Nikhil, How are you, have a n
+    #   ice day. Thanks for trying our documentation. Enjoy!</Say> </Response>' )
   end
 end

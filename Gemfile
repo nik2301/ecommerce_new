@@ -17,6 +17,7 @@ gem 'omniauth-google-oauth2'
 gem 'omniauth-facebook'
 gem 'twilio-ruby'
 gem 'acts_as_paranoid'
+gem 'simplecov', require: false, group: :test
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.8', '>= 5.2.8.1'
@@ -58,6 +59,7 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'capybara'
   gem 'database_cleaner'
+  gem 'shoulda-matchers', '~> 5.2'
 end
 
 group :development do
@@ -72,9 +74,9 @@ end
 group :test do
   # Adds support for Capybara system testing and selenium driver
   # gem 'capybara', '>= 2.15'
-  gem 'selenium-webdriver'
+  # gem 'selenium-webdriver'
   # Easy installation and use of chromedriver to run system tests with Chrome
-  gem 'chromedriver-helper'
+  # gem 'chromedriver-helper'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

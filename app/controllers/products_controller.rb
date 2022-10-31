@@ -101,10 +101,10 @@ class ProductsController < ApplicationController
     csv = CSV.parse(csv_text, headers: true, header_converters: converter)
 
     ActiveRecord::Base.transaction do
-      csv.each do |row|
+      csv.each_with_index do |row, i|
         product = Product.create(row.to_hash)
         if product.errors.any?
-          redirect_to products_path, alert: "Oops.! Something went wrong"
+          redirect_to products_path, alert: "Oops.! Error on line number #{i+1}"
           return
         end
       end

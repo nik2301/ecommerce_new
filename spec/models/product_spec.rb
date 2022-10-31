@@ -92,7 +92,6 @@ RSpec.describe Product, type: :model do
 
   # Has Image attached
   it 'has many attached images' do
-    binding.pry
     product = Product.new(
       name: "Test",
       description: 'qwertyuiopasdfghjklzxcvbnm',
@@ -100,6 +99,5 @@ RSpec.describe Product, type: :model do
     )
     product.images.attach(io: File.open(Rails.root.join('Witmates.jpeg')), filename: 'Witmates.jpeg', content_type: 'image/jpeg')
     expect(product.images).to be_an_instance_of(ActiveStorage::Attached::Many)
-    binding.pry
   end
 end

@@ -76,6 +76,25 @@ class ProductsController < ApplicationController
     end
   end
 
+  def email_csv_to_user
+    authenticate_user!
+    @products = Product.all
+    headers = %w[ Name Description Price ]
+    file =  CSV.open("products.csv", "w") do |csv|
+              csv = @products.map do |product|
+                      CSV.generate_line([
+                                          product.try(:name),
+                                          product.try(:description),
+                                          product.try(:price)
+                                        ])
+                    end
+              csv.unshift(CSV.generate_line(headers))
+            end
+
+    ProductMailer.with(email: current_user.email, csv: file).mail_csv.deliver_later
+    redirect_to products_path, notice: "Email sent on your registered Mail ID"
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_product

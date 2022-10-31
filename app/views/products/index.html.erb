@@ -20,6 +20,12 @@
     <%= link_to "Generate CSV", export_products_path(format: :csv) %> &emsp;
     <%= link_to "Email CSV", email_csv_path %> &emsp;
 
+    <%= form_tag(upload_path, multipart: true) do %>
+      <%= label_tag :upload_csv %> &emsp;
+      <%= file_field_tag :attachment %>
+      <%= submit_tag "Upload" %>
+    <% end %>
+
     <% @products.each do |product| %>
       <tr>
         <td><%= image_tag product.images.first.variant(resize: "50x70") unless product.images.first.nil? %></td>

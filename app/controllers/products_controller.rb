@@ -95,6 +95,24 @@ class ProductsController < ApplicationController
     redirect_to products_path, notice: "Email sent on your registered Mail ID"
   end
 
+  def upload_csv
+    csv_text = File.read(params[:attachment].path)
+    converter = lambda { |header| header.downcase }
+    csv = CSV.parse(csv_text, headers: true, header_converters: converter)
+
+    ActiveRecord::Base.transaction do
+      csv.each do |row|
+        product = Product.create(row.to_hash)
+        if product.errors.any?
+          redirect_to products_path, alert: "Oops.! Something went wrong"
+          return
+        end
+      end
+    end
+
+    redirect_to products_path, notice: "File Uploaded Successfully"
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_product

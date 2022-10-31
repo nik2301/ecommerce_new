@@ -1,4 +1,5 @@
 class ProductsController < ApplicationController
+  require 'csv'
   before_action :set_product, only: %i[ show edit update destroy ]
 
   # GET /products or /products.json
@@ -60,6 +61,18 @@ class ProductsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to products_url, notice: "Product was successfully destroyed." }
       format.json { head :no_content }
+    end
+  end
+
+  def export_csv
+    @products = Product.all
+
+    respond_to do |format|
+      format.csv do
+        response.headers['Content-Type'] = 'text/csv'
+        response.headers['Content-Disposition'] = "attachment; filename=products.csv"
+        render template: "products/export.csv.erb"
+      end
     end
   end
 

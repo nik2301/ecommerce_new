@@ -17,6 +17,8 @@
   </thead>
 
   <tbody>
+    <%= link_to "Generate CSV", export_products_path(format: :csv) %>
+
     <% @products.each do |product| %>
       <tr>
         <td><%= image_tag product.images.first.variant(resize: "50x70") unless product.images.first.nil? %></td>

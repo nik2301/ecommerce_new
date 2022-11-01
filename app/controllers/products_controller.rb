@@ -79,37 +79,18 @@ class ProductsController < ApplicationController
   def email_csv_to_user
     authenticate_user!
     @products = Product.all
-    headers = %w[ Name Description Price ]
-    file =  CSV.open("products.csv", "w") do |csv|
-              csv = @products.map do |product|
-                      CSV.generate_line([
-                                          product.try(:name),
-                                          product.try(:description),
-                                          product.try(:price)
-                                        ])
-                    end
-              csv.unshift(CSV.generate_line(headers))
-            end
+    Product.generate_csv(current_user, @products)
 
-    ProductMailer.with(email: current_user.email, csv: file).mail_csv.deliver_later
     redirect_to products_path, notice: "Email sent on your registered Mail ID"
   end
 
   def upload_csv
-    csv_text = File.read(params[:attachment].path)
-    converter = lambda { |header| header.downcase }
-    csv = CSV.parse(csv_text, headers: true, header_converters: converter)
+    result = Product.convert_file(params)
 
-    ActiveRecord::Base.transaction do
-      csv.each_with_index do |row, i|
-        product = Product.create(row.to_hash)
-        if product.errors.any?
-          redirect_to products_path, alert: "Oops.! Error on line number #{i+1}"
-          return
-        end
-      end
+    if result.is_a?(Array)
+      redirect_to products_path, alert: "Error: #{result[1].join} on line number #{result[0]} "
+      return
     end
-
     redirect_to products_path, notice: "File Uploaded Successfully"
   end
 

@@ -8,11 +8,33 @@ class ProductsController < ApplicationController
     respond_to do |format|
       format.json { render :index, location: @product }
       format.html
+      format.pdf do
+        # Rails 5,6
+        render template: "products/index.html.erb",
+               pdf: "Products: #{@products.count}",
+               layout: 'pdf.html'
+
+        # Rails 7
+        # https://github.com/mileszs/wicked_pdf/issues/1005
+        # render pdf: "Posts: #{@posts.count}", # filename
+        #        template: "hello/print_pdf",
+        #        formats: [:html],
+        #        disposition: :inline,
+        #        layout: 'pdf'
+      end
     end
   end
 
   # GET /products/1 or /products/1.json
   def show
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: "Product: #{@product.name}",
+               template: "products/show.pdf.erb",
+               layout: "pdf.html"
+      end
+    end
   end
 
   # GET /products/new

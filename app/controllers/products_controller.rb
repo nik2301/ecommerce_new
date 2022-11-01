@@ -31,7 +31,7 @@ class ProductsController < ApplicationController
       format.html
       format.pdf do
         render pdf: "Product: #{@product.name}",
-               template: "products/show.pdf.erb",
+               template: "pdf/product_details.html.erb",
                layout: "pdf.html"
       end
     end

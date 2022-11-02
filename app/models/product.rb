@@ -48,4 +48,14 @@ class Product < ApplicationRecord
   def self.send_to_user(email, product)
     ProductMailer.with(email: email).mail_pdf(product).deliver_later
   end
+
+  def self.generate_qr_code(product)
+    qr = RQRCode::QRCode.new(product.to_json(except: [:created_at, :updated_at]))
+    svg = qr.as_svg(
+      offset: 0,
+      color: 'FF0000',
+      shape_rendering: 'crispEdges',
+      module_size: 2
+    )
+  end
 end

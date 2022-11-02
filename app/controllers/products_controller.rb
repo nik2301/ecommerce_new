@@ -28,13 +28,7 @@ class ProductsController < ApplicationController
   # GET /products/1 or /products/1.json
   def show
     # Generate QR Code on show page
-    qr = RQRCode::QRCode.new(@product.to_json(except: [:created_at, :updated_at]))
-    @svg = qr.as_svg(
-      offset: 0,
-      color: 'FF0000',
-      shape_rendering: 'crispEdges',
-      module_size: 2
-    )
+    @svg = Product.generate_qr_code(@product)
     # Can also use like this
     # RQRCode::QRCode.new("{\"model_name\":\"#{self.class.to_s}\", \"inventory_type\":\"#{self.inventory_type.try(:name)}\", \"event_id\":\"#{ev_id}\", \"inventory_id\":#{self.id}, \"uid\":\"#{self.uid}\"}").as_png(border_modules: 0).resize(1200, 1200).to_data_url
     # For multiple data to display add hashes inside array with :data & :mode keys

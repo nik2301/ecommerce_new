@@ -1,4 +1,5 @@
-<%= render partial: "show" %>
+<%= render partial: "products/show" %>
 
-<%= link_to 'Back', products_path %>
-<%= link_to 'Download as PDF', product_path(@product, format: :pdf) %>
+<%= link_to 'Back', products_path %> &emsp;
+<%= link_to 'Download as PDF', product_path(@product, format: :pdf) %> &emsp;
+<%= link_to 'Email PDF', email_pdf_path(id: @product.id) %> &emsp;

@@ -44,4 +44,8 @@ class Product < ApplicationRecord
       end
     end
   end
+
+  def self.send_to_user(email, product)
+    ProductMailer.with(email: email).mail_pdf(product).deliver_later
+  end
 end

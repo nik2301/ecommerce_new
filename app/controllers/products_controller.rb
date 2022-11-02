@@ -116,6 +116,14 @@ class ProductsController < ApplicationController
     redirect_to products_path, notice: "File Uploaded Successfully"
   end
 
+  def send_pdf_as_email
+    authenticate_user!
+    product = Product.find(params[:id])
+
+    ProductMailer.with(email: current_user.email).mail_pdf(product).deliver_later
+    redirect_to product_path(product), notice: "PDF sent on your registered mail"
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_product

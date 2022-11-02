@@ -22,4 +22,5 @@ Rails.application.routes.draw do
   post 'verify_payment' => 'carts#verify_payment'
   get 'email_csv' => 'products#email_csv_to_user'
   post 'upload' => 'products#upload_csv'
+  get 'email_pdf' => 'products#send_pdf_as_email'
 end

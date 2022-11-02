@@ -20,6 +20,7 @@ gem 'acts_as_paranoid'
 gem 'simplecov', require: false, group: :test
 gem 'wicked_pdf'
 gem "wkhtmltopdf-binary", group: :development
+gem 'rqrcode'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.8', '>= 5.2.8.1'

@@ -5,6 +5,7 @@ class Product < ApplicationRecord
   scope :with_long_name, -> { where("LENGTH(name) > 5") }
   has_many_attached :images, dependent: :destroy
   validates_presence_of :name, :description, :price
+  has_many :reviews, as: :reviewable
   after_create :send_create_sms_to_admin
 
   def send_create_sms_to_admin

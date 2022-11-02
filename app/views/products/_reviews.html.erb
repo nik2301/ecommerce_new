@@ -1,0 +1,24 @@
+<div>
+  <hr><h4>Reviews: </h4>
+  <% if @product.reviews.present? %>
+    <ol>
+      <% @product.reviews.each do |review| %>
+        <li> <b>
+          Review: <%= review.content %> <br>
+          Added by: <%= review.user.email %> 
+        </b> </li> <br>
+      <% end %>
+    </ol>
+  <% else %>
+    <h5> Be the first one to review this product..</h5>
+  <% end %>
+</div>
+
+<div>
+  <hr><h4>Add a Review: </h4>
+  <%= form_with(model: [@product, @product.reviews.build], local: true) do |f| %>
+    <%= f.label :reviewer %>
+    <%= f.text_field :content %>
+    <%= f.submit %>
+  <% end %>
+</div>

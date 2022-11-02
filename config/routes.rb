@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :addresses
   resources :products do
     get 'export' => 'products#export_csv', on: :collection
+    resources :reviews
   end
   devise_for :users, :controllers => {
     sessions: 'users/sessions',

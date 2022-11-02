@@ -1,5 +1,6 @@
 class Product < ApplicationRecord
   include Reviewable
+  include Likable
   acts_as_paranoid
   has_many :cart_items, dependent: :destroy
   scope :price_above_30000, -> { where("price > 30000") }

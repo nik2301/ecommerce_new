@@ -129,8 +129,9 @@ class ProductsController < ApplicationController
   def send_pdf_as_email
     authenticate_user!
     product = Product.find(params[:id])
+    svg = Product.generate_qr_code(product)
 
-    ProductMailer.with(email: current_user.email).mail_pdf(product).deliver_later
+    ProductMailer.with(email: current_user.email).mail_pdf(product, svg).deliver_later
     redirect_to product_path(product), notice: "PDF sent on your registered mail"
   end
 

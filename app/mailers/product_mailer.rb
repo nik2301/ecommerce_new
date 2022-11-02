@@ -5,8 +5,9 @@ class ProductMailer < ApplicationMailer
     mail(to: params[:email], subject: 'CSV for All Products', body: body)
   end
 
-  def mail_pdf(product)
+  def mail_pdf(product, svg)
     @product = product
+    @svg = svg.html_safe
     body = "You can download the PDF file attached with this mail."
     attachments["product_#{@product.name}.pdf"] = WickedPdf.new.pdf_from_string(
       render_to_string(template: 'pdf/product_details.html.erb', layout: 'pdf.html', pdf: "Product: #{@product.name}")

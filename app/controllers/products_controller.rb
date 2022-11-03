@@ -1,6 +1,7 @@
 class ProductsController < ApplicationController
   require 'csv'
   before_action :set_product, only: %i[ show edit update destroy like unlike ]
+  before_action :authenticate_user!, only: %i[ like unlike send_pdf_as_email email_csv_to_user upload_csv ]
 
   # GET /products or /products.json
   def index
@@ -109,7 +110,6 @@ class ProductsController < ApplicationController
   end
 
   def email_csv_to_user
-    authenticate_user!
     @products = Product.all
     Product.generate_csv(current_user, @products)
 
@@ -127,7 +127,6 @@ class ProductsController < ApplicationController
   end
 
   def send_pdf_as_email
-    authenticate_user!
     product = Product.find(params[:id])
     svg = Product.generate_qr_code(product)
 

@@ -35,4 +35,8 @@ class User < ApplicationRecord
     LoginMailer.with(email: user.email, password: user.password || "", kind: kind).login_mail.deliver_later if user.persisted?
     user
   end
+
+  def online?
+    $redis_onlines.exists( "user:#{self.id}" )
+  end
 end

@@ -29,6 +29,9 @@ ActiveAdmin.register User do
     end
     column :created_at
     column :updated_at
+    column :status do |user|
+      user.online?.zero? ? "Inactive" : "Active"
+    end
     actions
   end
 end

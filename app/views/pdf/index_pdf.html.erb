@@ -1,0 +1,44 @@
+<h1>Products</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Image</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <br>
+    <% @products.each do |product| %>
+      <tr>
+        <td><%= image_tag product.images.first.variant(resize: "50x70") unless product.images.first.nil? %></td>
+        <td><%= product.name %></td>
+        <td><%= product.description %></td>
+        <td><%= product.price %></td>
+        <% cart_item = find_cart_item(product) if user_signed_in? %>
+        <td><%= cart_item.quantity %>
+
+        <hr>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+<style>
+body {
+  background-color: lightgrey;
+}
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+table {
+  width: 100%;
+}
+</style>

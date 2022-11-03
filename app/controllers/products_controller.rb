@@ -11,7 +11,8 @@ class ProductsController < ApplicationController
       format.html
       format.pdf do
         # Rails 5,6
-        render template: "products/index.html.erb",
+        @products = Product.all
+        render template: "pdf/index_pdf.html.erb",
                pdf: "Products: #{@products.count}",
                layout: 'pdf.html'
 

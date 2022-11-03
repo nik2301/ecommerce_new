@@ -1,5 +1,7 @@
 class ReviewsController < ApplicationController
   before_action :set_review, only: %i[ like unlike ]
+  before_action :authenticate_user!
+
   def create
     product = Product.find(params[:product_id])
     review = product.reviews.create(user_id: current_user.id, content: params[:review][:content])

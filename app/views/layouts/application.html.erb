@@ -13,8 +13,9 @@
     </head>
 
   <body>
-    <%= render partial: 'shared/navbar' %>
-
+    <div class="header-navbar">
+      <%= render partial: 'shared/navbar' %>
+    </div>
     <div class="notice">
       <% if notice %>
         <div id="notice" class="alert alert-success"><%= notice %></div>

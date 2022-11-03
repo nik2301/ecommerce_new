@@ -1,3 +1,4 @@
 $('.delete_from_cart').bind('ajax:success', function() {
    $(this).closest('tr').fadeOut();
+   $('.header-navbar').html("<%= j (render partial: 'shared/navbar') %>")
 });

@@ -36,7 +36,10 @@ class CartsController < ApplicationController
     cart_item = current_user.cart.cart_items.find(params[:id])
     cart_item.destroy
 
-    redirect_to cart_path
+    respond_to do |format|
+      format.html { redirect_to cart_path }
+      format.js { render layout: false }
+    end
   end
 
   def bulk_delete_cart_items

@@ -6,7 +6,7 @@
         <li> <b>
           Review: <%= review.content %> <br>
           Added by: <%= review.user.email %> <br>
-          <% if review.likes.where(user_id: current_user.id).present? %>
+          <% if review.likes.where(user_id: current_user&.id).present? %>
             <%= link_to 'Unlike', unlike_product_reviews_path(@product, review_id: review) %>
             <%= review.likes.size %> &emsp;
           <% else %>

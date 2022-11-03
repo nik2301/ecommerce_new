@@ -1,6 +1,6 @@
 <%= render partial: "products/show" %>
 
-<% if @product.likes.where(user_id: current_user.id).present? %>
+<% if @product.likes.where(user_id: current_user&.id).present? %>
   <%= link_to 'Unlike', product_unlike_path(@product) %>
   <%= @product.likes.size %> &emsp;
 <% else %>

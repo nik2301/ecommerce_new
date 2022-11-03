@@ -20,7 +20,7 @@ class CartsController < ApplicationController
     cart_item.save
     # flash[:notice] = "Added successfully"
 
-    params[:from_cart_page] == "true" ? (redirect_to cart_path) : (redirect_to products_path)
+    params[:from_cart_page] == "true" ? (redirect_to cart_path) : (redirect_to products_path(page: params[:page]))
   end
 
   def deduct_from_cart
@@ -29,7 +29,7 @@ class CartsController < ApplicationController
     cart_item.save
     # flash[:notice] = "Deleted successfully"
 
-    params[:from_cart_page] == "true" ? (redirect_to cart_path) : (redirect_to products_path)
+    params[:from_cart_page] == "true" ? (redirect_to cart_path) : (redirect_to products_path(page: params[:page]))
   end
 
   def remove_from_cart

@@ -28,7 +28,8 @@
     <% end %>
     <br>
 
-    <%= link_to "Download PDF", products_path(format: :pdf) %>
+    <%= link_to "Download PDF", products_path(format: :pdf) %> <br>
+    <%= paginate @products %>
 
     <% @products.each do |product| %>
       <tr>
@@ -40,11 +41,11 @@
 
         <% cart_item = find_cart_item(product) if user_signed_in? %>
         <% if cart_item.present? && cart_item.quantity > 0 %>
-          <td><%= button_to '-', deduct_from_cart_path, params: {product_id: product.id, cart_id: cart_id }, method: :get %>
+          <td><%= button_to '-', deduct_from_cart_path, params: {product_id: product.id, cart_id: cart_id, page: params[:page] }, method: :get %>
           <td><%= cart_item.quantity %>
-          <td><%= button_to '+', add_to_cart_path, params: {product_id: product.id, cart_id: cart_id }, method: :get %>
+          <td><%= button_to '+', add_to_cart_path, params: {product_id: product.id, cart_id: cart_id, page: params[:page] }, method: :get %>
         <% else %>
-          <td><%= button_to 'Add To Cart', add_to_cart_path, params: {product_id: product.id, cart_id: cart_id }, method: :get %>
+          <td><%= button_to 'Add To Cart', add_to_cart_path, params: {product_id: product.id, cart_id: cart_id, page: params[:page] }, method: :get %>
         <% end %>
         <hr>
       </tr>

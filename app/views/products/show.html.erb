@@ -1,5 +1,13 @@
 <%= render partial: "products/show" %>
 
+<% if @product.likes.where(user_id: current_user.id).present? %>
+  <%= link_to 'Unlike', product_unlike_path(@product) %>
+  <%= @product.likes.size %> &emsp;
+<% else %>
+  <%= link_to 'Like', product_like_path(@product) %>
+  <%= @product.likes.size %> &emsp;
+<% end %>
+
 <%= link_to 'Back', products_path %> &emsp;
 <%= link_to 'Download as PDF', product_path(@product, format: :pdf) %> &emsp;
 <%= link_to 'Email PDF', email_pdf_path(id: @product.id) %> &emsp;

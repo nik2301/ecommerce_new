@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
   require 'csv'
-  before_action :set_product, only: %i[ show edit update destroy ]
+  before_action :set_product, only: %i[ show edit update destroy like unlike ]
 
   # GET /products or /products.json
   def index
@@ -135,10 +135,21 @@ class ProductsController < ApplicationController
     redirect_to product_path(product), notice: "PDF sent on your registered mail"
   end
 
+  def like
+    @product.likes.create(user_id: current_user.id)
+    redirect_to @product
+  end
+
+  def unlike
+    like = @product.likes.where(user_id: current_user.id)
+    like.destroy_all
+    redirect_to @product
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_product
-      @product = Product.includes(:reviews).find(params[:id])
+      @product = Product.includes(:reviews).find((params[:product_id] || params[:id]))
     end
 
     # Only allow a list of trusted parameters through.

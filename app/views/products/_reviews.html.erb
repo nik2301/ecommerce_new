@@ -5,7 +5,14 @@
       <% @product.reviews.each do |review| %>
         <li> <b>
           Review: <%= review.content %> <br>
-          Added by: <%= review.user.email %> 
+          Added by: <%= review.user.email %> <br>
+          <% if review.likes.where(user_id: current_user.id).present? %>
+            <%= link_to 'Unlike', unlike_product_reviews_path(@product, review_id: review) %>
+            <%= review.likes.size %> &emsp;
+          <% else %>
+            <%= link_to 'Like', like_product_reviews_path(@product, review_id: review) %>
+            <%= review.likes.size %> &emsp;
+          <% end %>
         </b> </li> <br>
       <% end %>
     </ol>

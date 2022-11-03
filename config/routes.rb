@@ -5,7 +5,12 @@ Rails.application.routes.draw do
   resources :addresses
   resources :products do
     get 'export' => 'products#export_csv', on: :collection
-    resources :reviews
+    get 'like' => 'products#like'
+    get 'unlike' => 'products#unlike'
+    resources :reviews do
+      get 'like' => 'reviews#like', on: :collection
+      get 'unlike' => 'reviews#unlike', on: :collection
+    end
   end
   devise_for :users, :controllers => {
     sessions: 'users/sessions',

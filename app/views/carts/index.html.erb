@@ -6,6 +6,7 @@
 <table>
   <thead>
   <tr>
+    <th>Image</th>
     <th>Name</th>
     <th>Description</th>
     <th>Price</th>
@@ -17,6 +18,7 @@
   <tbody>
     <% @cart_items.each do |item| %>
       <tr>
+        <td><%= image_tag item.product.images.first.variant(resize: "50x70") if item.product.images.attached? %></td>
         <td><%= item.product.name %></td>
         <td><%= item.product.description %></td>
         <td><%= item.product.price %></td>

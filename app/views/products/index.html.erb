@@ -33,7 +33,7 @@
 
     <% @products.each do |product| %>
       <tr>
-        <td><%= image_tag product.images.first.variant(resize: "50x70") unless product.images.first.nil? %></td>
+        <td><%= image_tag product.images.first.variant(resize: "50x70") if product.images.attached? %></td>
         <td><%= product.name %></td>
         <td><%= product.description %></td>
         <td><%= product.price %></td>

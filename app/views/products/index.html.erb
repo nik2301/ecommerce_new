@@ -30,25 +30,26 @@
 
     <%= link_to "Download PDF", products_path(format: :pdf) %> <br>
     <%= paginate @products %>
-
     <% @products.each do |product| %>
-      <tr>
-        <td><%= image_tag product.images.first.variant(resize: "50x70") if product.images.attached? %></td>
-        <td><%= product.name %></td>
-        <td><%= product.description %></td>
-        <td><%= product.price %></td>
-        <td><%= link_to 'Show', product %></td>
+      <%= cache product, expires_in: 1.hour do %>
+        <tr>
+          <td><%= image_tag product.images.first.variant(resize: "50x70") if product.images.attached? %></td>
+          <td><%= product.name %></td>
+          <td><%= product.description %></td>
+          <td><%= product.price %></td>
+          <td><%= link_to 'Show', product %></td>
 
-        <% cart_item = find_cart_item(product) if user_signed_in? %>
-        <% if cart_item.present? && cart_item.quantity > 0 %>
-          <td><%= button_to '-', deduct_from_cart_path, params: {product_id: product.id, cart_id: cart_id, page: params[:page] }, method: :get %>
-          <td><%= cart_item.quantity %>
-          <td><%= button_to '+', add_to_cart_path, params: {product_id: product.id, cart_id: cart_id, page: params[:page] }, method: :get %>
-        <% else %>
-          <td><%= button_to 'Add To Cart', add_to_cart_path, params: {product_id: product.id, cart_id: cart_id, page: params[:page] }, method: :get %>
-        <% end %>
-        <hr>
-      </tr>
+          <% cart_item = find_cart_item(product) if user_signed_in? %>
+          <% if cart_item.present? && cart_item.quantity > 0 %>
+            <td><%= button_to '-', deduct_from_cart_path, params: {product_id: product.id, cart_id: cart_id, page: params[:page] }, method: :get %>
+            <td><%= cart_item.quantity %>
+            <td><%= button_to '+', add_to_cart_path, params: {product_id: product.id, cart_id: cart_id, page: params[:page] }, method: :get %>
+          <% else %>
+            <td><%= button_to 'Add To Cart', add_to_cart_path, params: {product_id: product.id, cart_id: cart_id, page: params[:page] }, method: :get %>
+          <% end %>
+          <hr>
+        </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>

@@ -41,6 +41,7 @@ class ProductsController < ApplicationController
 
     respond_to do |format|
       format.html
+      format.json { render json: Product.all}
       format.pdf do
         render pdf: "Product: #{@product.name}",
                template: "pdf/product_details.html.erb",

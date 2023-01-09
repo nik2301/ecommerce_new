@@ -18,19 +18,21 @@
   <tbody>
     <% @cart_items.each do |item| %>
       <tr>
-        <td><%= image_tag item.product.images.first.variant(resize: "50x70") if item.product.images.attached? %></td>
-        <td><%= item.product.name %></td>
-        <td><%= item.product.description %></td>
-        <td><%= item.product.price %></td>
-        <td><%= item.quantity %></td>
-        <% if item.quantity > 0 %>
-          <td><%= button_to '-', deduct_from_cart_path, params: {product_id: item.product.id, cart_id: current_user.cart.id, from_cart_page: :true }, method: :get %></td>
-        <% else %>
-          <td> &emsp;&emsp;</td>
+        <%= cache item do %>
+          <td><%= image_tag item.product.images.first.variant(resize: "50x70") if item.product.images.attached? %></td>
+          <td><%= item.product.name %></td>
+          <td><%= item.product.description %></td>
+          <td><%= item.product.price %></td>
+          <td><%= item.quantity %></td>
+          <% if item.quantity > 0 %>
+            <td><%= button_to '-', deduct_from_cart_path, params: {product_id: item.product.id, cart_id: current_user.cart.id, from_cart_page: :true }, method: :get %></td>
+          <% else %>
+            <td> &emsp;&emsp;</td>
+          <% end %>
+          <td><%= button_to '+', add_to_cart_path, params: {product_id: item.product.id, cart_id: current_user.cart.id, from_cart_page: :true }, method: :get %></td>
+          <td><%= link_to 'Show', product_path(item.product) %></td>
+          <td><%= link_to 'Remove from Cart', remove_from_cart_path(id: item), method: :delete, data: { confirm: 'Are you sure?' }, remote: true, class: 'delete_from_cart' %></td>
         <% end %>
-        <td><%= button_to '+', add_to_cart_path, params: {product_id: item.product.id, cart_id: current_user.cart.id, from_cart_page: :true }, method: :get %></td>
-        <td><%= link_to 'Show', product_path(item.product) %></td>
-        <td><%= link_to 'Remove from Cart', remove_from_cart_path(id: item), method: :delete, data: { confirm: 'Are you sure?' }, remote: true, class: 'delete_from_cart' %></td>
       </tr>
     <% end %>
   </tbody>

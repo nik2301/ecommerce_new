@@ -1,7 +1,8 @@
 class CartItem < ApplicationRecord
   belongs_to :cart
   belongs_to :product
-  after_save :touch_products
+  after_update :touch_products
+  after_destroy :touch_products
   # default_scope { order(created_at: :desc) }
 
   private

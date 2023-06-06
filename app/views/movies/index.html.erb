@@ -1,0 +1,81 @@
+<h1>Movies#index</h1>
+<p>Find me in app/views/movies/index.html.erb</p>
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Float four columns side by side */
+.column {
+  float: left;
+  width: 25%;
+  padding: 10px;
+}
+
+/* Remove extra left and right margins, due to padding */
+.row {margin: 0 -5px;}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive columns */
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+  }
+}
+
+/* Style the counter cards */
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 16px;
+  text-align: center;
+  background-color: #f1f1f1;
+  min-height: 100%;
+}
+/* h3 {
+  font-size: 18px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+} */
+</style>
+</head>
+<body>
+
+<h2>Responsive Column Cards</h2>
+<p>Resize the browser window to see the effect.</p>
+<% data = JSON.parse(@movies) %>
+
+<div class="row">
+  <% data["resource"]["videos"].each do |movie| %>
+    <% movie_id = movie["primaryTitle"]["id"].split("/").last %>
+    <div class="column">
+      <a href="/movies/<%= movie_id %>" style="text-decoration: none;">
+        <div class="card">
+          <img src="<%= movie["image"]["url"] %>" loading="lazy">
+          <h3><%= movie["title"] %></h3>
+          <p><%= movie["description"] %></p>
+          <p>Some text</p>
+        </div>
+      </a>
+    </div>
+  <% end %>
+</div>
+
+</body>
+</html>

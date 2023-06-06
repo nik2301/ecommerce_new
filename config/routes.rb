@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'movies/index'
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   resources :orders
@@ -29,4 +30,6 @@ Rails.application.routes.draw do
   get 'email_csv' => 'products#email_csv_to_user'
   post 'upload' => 'products#upload_csv'
   get 'email_pdf' => 'products#send_pdf_as_email'
+  get 'movies' => 'movies#index'
+  get 'movies/:id' => 'movies#movie_detail'
 end
